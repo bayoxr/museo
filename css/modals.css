@@ -1,0 +1,160 @@
+/* ==========================================================================
+   modals.css — Document Drawer, iCloud Storage, Sketch, Search, Templates & Help
+   ========================================================================== */
+
+/* ---------- Slide-over Long-Form Document Drawer ---------- */
+.doc-drawer {
+  position: fixed; top: var(--topbar-h); right: 0; bottom: 0; width: min(640px, 92vw);
+  z-index: 60; border-width: 0 0 0 1px; box-shadow: -16px 0 48px rgb(0 0 0 / .35);
+  display: flex; flex-direction: column; animation: slideInRight .25s var(--ease);
+}
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: none; } }
+.doc-drawer-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 18px; border-bottom: 1px solid var(--panel-border);
+}
+.doc-drawer-tools { display: flex; align-items: center; gap: 3px; }
+.doc-drawer-meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); }
+.doc-drawer-body { flex: 1; overflow-y: auto; padding: 32px 44px 60px; }
+.doc-title-input {
+  width: 100%; border: 0; background: none; outline: none; color: var(--text);
+  font-family: var(--font-display); font-size: 28px; font-weight: 700; margin-bottom: 18px;
+}
+.doc-editor {
+  outline: none; min-height: 360px; font-size: 15.5px; line-height: 1.7; color: var(--text);
+}
+.doc-editor:empty::before { content: attr(data-placeholder); color: var(--muted); opacity: .65; }
+.doc-editor h2 { font-family: var(--font-display); font-size: 21px; margin: 22px 0 8px; }
+.doc-editor h3 { font-family: var(--font-display); font-size: 17px; margin: 16px 0 6px; }
+.doc-editor blockquote {
+  margin: 12px 0; padding: 8px 14px; border-left: 3px solid var(--accent);
+  background: var(--hover); border-radius: 0 8px 8px 0;
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 300; background: rgb(0 0 0 / .82); backdrop-filter: blur(8px);
+  display: grid; place-items: center; cursor: zoom-out; animation: fadeIn .2s;
+}
+.lightbox img {
+  max-width: 92vw; max-height: 90vh; border-radius: 12px;
+  box-shadow: 0 30px 80px rgb(0 0 0 / .6); animation: pop .3s var(--spring);
+}
+@keyframes fadeIn { from { opacity: 0; } }
+
+/* ---------- Base Modal Dialogs ---------- */
+.help-dialog, .modal-dialog {
+  border: 1px solid var(--panel-border); border-radius: 18px; padding: 22px 24px;
+  background: var(--panel-solid); color: var(--text); box-shadow: var(--shadow-lift);
+}
+.help-dialog { width: min(560px, 92vw); }
+.help-dialog::backdrop, .modal-dialog::backdrop { background: rgb(0 0 0 / .48); backdrop-filter: blur(4px); }
+.help-dialog[open], .modal-dialog[open] { animation: pop .28s var(--spring); }
+.help-dialog header, .modal-dialog header {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 14px;
+}
+.help-dialog h2, .modal-dialog h2 { margin: 0; font-family: var(--font-display); font-size: 20px; }
+.modal-sub { margin: 4px 0 0; font-size: 13px; color: var(--muted); }
+.help-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 20px; font-size: 13.5px; }
+kbd {
+  display: inline-block; min-width: 24px; padding: 2px 7px; margin-right: 6px; border-radius: 6px; text-align: center;
+  font: 600 12px var(--font); background: var(--hover); border: 1px solid var(--panel-border); border-bottom-width: 2px;
+}
+.help-foot { color: var(--muted); font-size: 13px; line-height: 1.5; margin: 18px 0 0; }
+
+/* ---------- iCloud Drive & Board Storage Dialog ---------- */
+.storage-dialog { width: min(640px, 94vw); }
+.storage-title-row { display: flex; align-items: center; gap: 12px; }
+.storage-path-box {
+  background: var(--card); border: 1px solid var(--panel-border); border-radius: 12px;
+  padding: 14px 16px; margin-bottom: 16px;
+}
+.storage-path-label { font-size: 11.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+.storage-path-box code {
+  display: block; font-family: var(--font-mono); font-size: 12.5px; color: var(--accent);
+  word-break: break-all; margin-bottom: 12px;
+}
+.storage-path-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.storage-boards-section h3 { margin: 0 0 10px; font-size: 14.5px; font-weight: 650; }
+.storage-boards-list {
+  max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;
+}
+.storage-board-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 9px 12px; border-radius: 10px; background: var(--card); border: 1px solid var(--panel-border);
+}
+.storage-board-info { min-width: 0; flex: 1; }
+.storage-board-title { font-weight: 600; font-size: 13.5px; }
+.storage-board-meta { font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+.storage-board-actions { display: flex; gap: 6px; }
+
+/* ---------- Freehand Sketch Dialog ---------- */
+.sketch-dialog { width: min(740px, 95vw); padding: 18px 20px; }
+.sketch-toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sketch-colors { display: flex; gap: 5px; }
+.sketch-swatch {
+  width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;
+}
+.sketch-swatch.active { border-color: var(--text); transform: scale(1.15); }
+.sketch-size-label { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
+.sketch-size-label input { width: 70px; accent-color: var(--accent); }
+.sketch-actions { display: flex; gap: 6px; }
+.sketch-canvas-wrap {
+  border-radius: 12px; overflow: hidden; border: 1px solid var(--panel-border);
+  background: #18181f; display: grid; place-items: center;
+}
+[data-theme="light"] .sketch-canvas-wrap { background: #faf7f2; }
+#sketch-canvas { display: block; max-width: 100%; cursor: crosshair; touch-action: none; }
+
+/* ---------- Search Command Palette ---------- */
+.search-dialog { width: min(560px, 92vw); padding: 0; overflow: hidden; }
+.search-box {
+  display: flex; align-items: center; gap: 10px; padding: 14px 16px;
+  border-bottom: 1px solid var(--panel-border);
+}
+.search-box svg { color: var(--muted); }
+.search-box input {
+  flex: 1; border: 0; background: none; outline: none; font: inherit; font-size: 15px; color: var(--text);
+}
+.search-results { max-height: 360px; overflow-y: auto; padding: 8px; }
+.search-item {
+  width: 100%; border: 0; background: none; padding: 9px 12px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  text-align: left; cursor: pointer; color: var(--text);
+}
+.search-item:hover, .search-item.active { background: var(--hover); }
+.search-item-main { min-width: 0; flex: 1; }
+.search-item-title { font-weight: 600; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-item-sub { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-badge {
+  font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 6px;
+  background: var(--accent-soft); color: var(--accent); text-transform: uppercase;
+}
+.search-empty { padding: 28px; text-align: center; color: var(--muted); }
+
+/* ---------- Templates Dialog ---------- */
+.templates-dialog { width: min(760px, 94vw); }
+.templates-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 12px;
+  margin: 14px 0;
+}
+.tpl-card {
+  border: 1px solid var(--panel-border); border-radius: 14px; padding: 12px;
+  background: var(--card); text-align: left; cursor: pointer;
+  transition: transform .18s var(--spring), border-color .15s, box-shadow .18s;
+}
+.tpl-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: var(--shadow-hover); }
+.tpl-preview {
+  height: 76px; border-radius: 9px; display: grid; place-items: center; font-size: 28px; margin-bottom: 10px;
+}
+.tpl-mood { background: linear-gradient(135deg, hsl(350 80% 60% / .25), hsl(38 90% 58% / .25)); }
+.tpl-brief { background: linear-gradient(135deg, hsl(256 85% 65% / .25), hsl(204 90% 60% / .25)); }
+.tpl-kanban { background: linear-gradient(135deg, hsl(170 65% 46% / .25), hsl(92 60% 52% / .25)); }
+.tpl-story { background: linear-gradient(135deg, hsl(262 85% 68% / .25), hsl(350 86% 64% / .25)); }
+.tpl-brand { background: linear-gradient(135deg, hsl(38 95% 58% / .25), hsl(256 92% 67% / .25)); }
+.tpl-mind { background: linear-gradient(135deg, hsl(196 92% 58% / .25), hsl(262 85% 68% / .25)); }
+.tpl-card h3 { margin: 0 0 4px; font-size: 14.5px; font-weight: 650; }
+.tpl-card p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.45; }
+.templates-foot { padding-top: 10px; border-top: 1px solid var(--panel-border); font-size: 13px; color: var(--muted); }
+.tpl-mode-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.tpl-mode-toggle input { accent-color: var(--accent); }

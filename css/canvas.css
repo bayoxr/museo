@@ -1,0 +1,74 @@
+/* ==========================================================================
+   canvas.css — Infinite 2D Viewport, Connectors, Snap Guides & Empty State
+   ========================================================================== */
+
+.viewport {
+  position: fixed; inset: var(--topbar-h) 0 0 0; overflow: hidden; touch-action: none;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--grid) 1.1px, transparent 1.4px);
+  background-size: 24px 24px;
+}
+.viewport::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(1200px 600px at 70% -10%, var(--bg-glow), transparent 70%);
+}
+.viewport.space-pan { cursor: grab; }
+.viewport.panning, .viewport.panning * { cursor: grabbing !important; }
+.viewport.connect-mode, .viewport.connect-mode .card { cursor: crosshair; }
+.world { position: absolute; left: 0; top: 0; width: 0; height: 0; transform-origin: 0 0; }
+.cards-layer { position: absolute; left: 0; top: 0; }
+.cards-layer.enter { animation: boardIn .38s var(--ease); }
+@keyframes boardIn { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: none; } }
+
+/* ---------- Lines & Connectors ---------- */
+.lines-layer { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; z-index: 100000; }
+.line { fill: none; stroke: var(--line); stroke-width: 2.2; transition: stroke .15s; }
+.line.dashed { stroke-dasharray: 7 6; }
+.line.dotted { stroke-dasharray: 2.5 5; stroke-linecap: round; }
+.line.selected { stroke: var(--accent); stroke-width: 2.8; }
+.line.preview { stroke: var(--accent); stroke-dasharray: 6 6; }
+.line-hit { fill: none; stroke: transparent; stroke-width: 16; pointer-events: stroke; cursor: pointer; }
+.line-hit:hover + .line { stroke: var(--text); }
+.arrow-head { fill: var(--line); }
+.arrow-head.sel { fill: var(--accent); }
+.line-label-bg { fill: var(--panel-solid); stroke: var(--panel-border); stroke-width: 1; rx: 6; }
+.line-label-bg.sel { stroke: var(--accent); }
+.line-label-text {
+  fill: var(--text); font-family: var(--font); font-size: 11.5px; font-weight: 500;
+  text-anchor: middle; dominant-baseline: central; pointer-events: auto; cursor: pointer;
+}
+
+/* ---------- Smart Alignment Snap Guides ---------- */
+.guides-layer { position: absolute; left: 0; top: 0; pointer-events: none; z-index: 100001; }
+.align-guide {
+  position: absolute; background: var(--accent); opacity: .75;
+  box-shadow: 0 0 8px var(--accent);
+}
+.align-guide.v { width: 1.5px; }
+.align-guide.h { height: 1.5px; }
+
+.marquee {
+  position: absolute; z-index: 30; pointer-events: none; border-radius: 4px;
+  border: 1px solid var(--accent); background: var(--accent-soft);
+}
+
+/* ---------- Empty State & Starter Templates ---------- */
+.empty-state {
+  position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%);
+  text-align: center; color: var(--muted); max-width: 520px;
+  animation: boardIn .5s var(--ease);
+}
+.empty-state h2 { font-family: var(--font-display); color: var(--text); font-weight: 600; margin: 18px 0 6px; font-size: 21px; }
+.empty-state p { margin: 0 0 16px; line-height: 1.5; pointer-events: none; }
+.empty-art { position: relative; width: 120px; height: 84px; margin: 0 auto; pointer-events: none; }
+.empty-art span { position: absolute; border-radius: 10px; background: var(--card); border: 1px solid var(--card-border); box-shadow: var(--shadow); }
+.empty-art span:nth-child(1) { width: 56px; height: 64px; left: 4px; top: 10px; transform: rotate(-8deg); }
+.empty-art span:nth-child(2) { width: 56px; height: 44px; left: 60px; top: 0; transform: rotate(6deg); border-top: 3px solid var(--accent); }
+.empty-art span:nth-child(3) { width: 48px; height: 36px; left: 44px; top: 44px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); opacity: .85; }
+.empty-templates { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.empty-tpl-btn {
+  padding: 8px 13px; border-radius: 10px; border: 1px solid var(--panel-border);
+  background: var(--card); color: var(--text); font-size: 13px; font-weight: 500;
+  cursor: pointer; box-shadow: var(--shadow); transition: transform .15s var(--spring), border-color .15s;
+}
+.empty-tpl-btn:hover { transform: translateY(-2px); border-color: var(--accent); }

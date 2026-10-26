@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Museo — Creative visual boards & moodboards for Mac</title>
+  <meta name="description" content="Museo is a local-first & iCloud-synced visual workspace for Mac. Organize notes, moodboards, color swatches, documents, tables, sketches, links, to-dos and ideas on infinite boards.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2319062b'/%3E%3Crect x='2.5' y='2.5' width='59' height='59' rx='11.5' fill='none' stroke='%23c06eff' stroke-width='3.5'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Outfit,Inter,-apple-system,sans-serif' font-weight='800' font-size='31' letter-spacing='-1' fill='%23f2deff'%3EMu%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/canvas.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/modals.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-logo" viewBox="0 0 64 64" aria-hidden="true">
+        <defs>
+          <linearGradient id="mu-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#24093d"/>
+            <stop offset="100%" stop-color="#120421"/>
+          </linearGradient>
+          <linearGradient id="mu-ring" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#d28eff"/>
+            <stop offset="100%" stop-color="#9b4dff"/>
+          </linearGradient>
+        </defs>
+        <rect width="64" height="64" rx="14" fill="url(#mu-bg)"/>
+        <rect x="2.5" y="2.5" width="59" height="59" rx="11.5" fill="none" stroke="url(#mu-ring)" stroke-width="3.5"/>
+        <text x="32" y="43.5" text-anchor="middle" font-family="'Outfit','Inter',-apple-system,sans-serif" font-weight="800" font-size="31" letter-spacing="-1.2" fill="#f3e2ff">Mu</text>
+      </svg>
+      <span class="brand-name">Museo</span>
+      <span class="brand-badge" title="Native macOS & iCloud Drive Creative Suite">STUDIO</span>
+    </div>
+    <nav class="breadcrumbs" id="breadcrumbs" aria-label="Board path"></nav>
+    <div class="top-actions">
+      <button class="search-trigger" id="btn-search" title="Quick Search & Jump (⌘K)">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span>Search…</span>
+        <kbd>⌘K</kbd>
+      </button>
+      <button class="text-btn accent-btn" id="btn-templates" title="Board Templates">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="6" rx="1.5"/><rect x="3" y="12" width="8" height="9" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/></svg>
+        <span>Templates</span>
+      </button>
+      <span class="top-sep"></span>
+      <button class="save-status" id="save-status" title="Click to manage iCloud Drive sync & per-board files">
+        <i></i>
+        <svg class="cloud-icon" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+        <span>iCloud Synced</span>
+      </button>
+      <button class="icon-btn" id="btn-undo" title="Undo (⌘Z)" aria-label="Undo"><svg viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>
+      <button class="icon-btn" id="btn-redo" title="Redo (⇧⌘Z)" aria-label="Redo"><svg viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H10a6 6 0 0 0 0 12h3"/></svg></button>
+      <button class="icon-btn active" id="btn-snap" title="Toggle smart alignment & grid snap" aria-label="Toggle snap"><svg viewBox="0 0 24 24"><path d="M3 3h4v4H3zM10 3h4v4h-4zM17 3h4v4h-4zM3 10h4v4H3zM10 10h4v4h-4zM17 10h4v4h-4zM3 17h4v4H3zM10 17h4v4h-4zM17 17h4v4h-4z"/></svg></button>
+      <span class="top-sep"></span>
+      <button class="text-btn" id="btn-export-png" title="Export board as PNG image">PNG</button>
+      <button class="text-btn" id="btn-import" title="Import a JSON workspace or board backup">Import</button>
+      <button class="text-btn" id="btn-export" title="Download a JSON backup">Export</button>
+      <button class="icon-btn" id="btn-theme" title="Toggle Dark / Cork Light theme" aria-label="Toggle theme"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      <button class="icon-btn" id="btn-help" title="Keyboard shortcuts (?)" aria-label="Keyboard shortcuts"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.3"/><path d="M12 17h.01"/></svg></button>
+    </div>
+  </header>
+
+  <aside class="toolbar" id="toolbar" aria-label="Add cards">
+    <button class="tool" data-tool="note" id="tool-note" title="Note (N)"><svg viewBox="0 0 24 24"><path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/></svg><span>Note</span></button>
+    <button class="tool" data-tool="heading" id="tool-heading" title="Heading / Title (H)"><svg viewBox="0 0 24 24"><path d="M6 4v16M18 4v16M6 12h12"/></svg><span>Title</span></button>
+    <button class="tool" data-tool="todo" id="tool-todo" title="To-do list (T)"><svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="5" height="5" rx="1.2"/><path d="M11 7h10"/><rect x="3" y="14.5" width="5" height="5" rx="1.2"/><path d="M11 17h10"/></svg><span>To-do</span></button>
+    <button class="tool" data-tool="link" id="tool-link" title="Link bookmark (L)"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><span>Link</span></button>
+    <button class="tool" data-tool="image" id="tool-image" title="Image / Picture (I)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg><span>Image</span></button>
+    <button class="tool" data-tool="swatch" id="tool-swatch" title="Color Swatch (S)"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg><span>Swatch</span></button>
+    <button class="tool" data-tool="document" id="tool-document" title="Long-form Document (D)"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg><span>Doc</span></button>
+    <button class="tool" data-tool="table" id="tool-table" title="Table grid (M)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 4v16M15 4v16"/></svg><span>Table</span></button>
+    <button class="tool" data-tool="sketch" id="tool-sketch" title="Sketch pad (K)"><svg viewBox="0 0 24 24"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg><span>Sketch</span></button>
+    <button class="tool" data-tool="comment" id="tool-comment" title="Comment annotation (O)"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span>Comment</span></button>
+    <span class="tool-sep"></span>
+    <button class="tool" data-tool="board" id="tool-board" title="Nested Board (B)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1.8"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.8"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.8"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.8"/></svg><span>Board</span></button>
+    <button class="tool" data-tool="column" id="tool-column" title="Column container (C)"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg><span>Column</span></button>
+    <button class="tool" data-tool="line" id="tool-line" title="Connector Arrow (A)"><svg viewBox="0 0 24 24"><path d="M5 19 19 5"/><path d="M10 5h9v9"/></svg><span>Arrow</span></button>
+  </aside>
+
+  <main class="viewport" id="viewport">
+    <h1 class="sr-only">Museo board</h1>
+    <div class="world" id="world">
+      <div class="cards-layer" id="cards-layer"></div>
+      <svg class="lines-layer" id="lines-layer" width="1" height="1"></svg>
+      <div class="guides-layer" id="guides-layer"></div>
+    </div>
+    <div class="marquee" id="marquee" hidden></div>
+    <div class="empty-state" id="empty-state" hidden>
+      <div class="empty-art"><span></span><span></span><span></span></div>
+      <h2>This board is empty</h2>
+      <p>Drag any card from the left dock, double-click anywhere on the canvas, paste an image/URL, or jump-start with a template:</p>
+      <div class="empty-templates" id="empty-templates">
+        <button class="empty-tpl-btn" data-tpl="moodboard">🎨 Moodboard</button>
+        <button class="empty-tpl-btn" data-tpl="brief">📄 Creative Brief</button>
+        <button class="empty-tpl-btn" data-tpl="kanban">📋 Kanban Plan</button>
+        <button class="empty-tpl-btn" data-tpl="storyboard">🎬 Storyboard</button>
+        <button class="empty-tpl-btn" data-tpl="brand">✦ Brand System</button>
+      </div>
+    </div>
+  </main>
+
+  <div class="format-bar" id="format-bar" hidden>
+    <div class="swatches" id="swatches"></div>
+    <span class="fb-sep" id="fb-sep-size"></span>
+    <!-- Universal Size & Font Controls (for Titles, Pictures, Notes, Boards, Swatches, etc.) -->
+    <div class="fb-group" id="fb-size-group">
+      <button class="icon-btn fb-mini-btn" id="fb-font-down" title="Decrease text / title size (⌘[)" aria-label="Smaller text">A−</button>
+      <span class="fb-readout" id="fb-font-readout" title="Text / title font size">14px</span>
+      <button class="icon-btn fb-mini-btn" id="fb-font-up" title="Increase text / title size (⌘])" aria-label="Larger text">A+</button>
+      <span class="fb-sep"></span>
+      <button class="text-btn fb-preset-btn" data-size-preset="S" title="Small card size">S</button>
+      <button class="text-btn fb-preset-btn" data-size-preset="M" title="Medium card size">M</button>
+      <button class="text-btn fb-preset-btn" data-size-preset="L" title="Large card size">L</button>
+      <button class="text-btn fb-preset-btn" data-size-preset="XL" title="Extra-Large card size">XL</button>
+      <button class="text-btn fb-preset-btn" id="fb-size-reset" title="Reset height to auto-fit content">Auto</button>
+    </div>
+    <span class="fb-sep" id="fb-sep-rich"></span>
+    <div class="fb-group" id="fb-rich-group">
+      <button class="icon-btn fb-cmd" data-cmd="bold" title="Bold (⌘B)" aria-label="Bold"><b>B</b></button>
+      <button class="icon-btn fb-cmd" data-cmd="italic" title="Italic (⌘I)" aria-label="Italic"><i>I</i></button>
+      <button class="icon-btn fb-cmd" data-cmd="strikeThrough" title="Strikethrough" aria-label="Strikethrough"><s>S</s></button>
+      <button class="icon-btn fb-cmd" data-cmd="insertUnorderedList" title="Bullet List" aria-label="Bullet List"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M5 6h.01M5 12h.01M5 18h.01"/></svg></button>
+    </div>
+    <div class="fb-group" id="fb-image-group" hidden>
+      <button class="text-btn fb-action-btn" id="fb-img-fit" title="Toggle Crop (Cover) vs Fit (Contain)">📐 Fit: Cover</button>
+      <button class="text-btn fb-action-btn" id="fb-extract-palette" title="Extract 5 dominant colours as Swatch cards">🎨 Extract Palette</button>
+    </div>
+    <div class="fb-group" id="fb-table-group" hidden>
+      <button class="text-btn fb-action-btn" id="fb-table-add-row" title="Add Row">+ Row</button>
+      <button class="text-btn fb-action-btn" id="fb-table-add-col" title="Add Column">+ Col</button>
+      <button class="text-btn fb-action-btn" id="fb-table-del-row" title="Remove Last Row">− Row</button>
+      <button class="text-btn fb-action-btn" id="fb-table-del-col" title="Remove Last Column">− Col</button>
+    </div>
+    <div class="fb-group" id="fb-sketch-group" hidden>
+      <button class="text-btn fb-action-btn" id="fb-edit-sketch" title="Open drawing canvas">✏️ Edit Sketch</button>
+    </div>
+    <div class="fb-group" id="fb-doc-group" hidden>
+      <button class="text-btn fb-action-btn" id="fb-open-doc" title="Open full document editor">📄 Open Editor</button>
+    </div>
+    <div class="fb-group" id="fb-line-group" hidden>
+      <button class="text-btn fb-action-btn" id="fb-line-style" title="Cycle Solid / Dashed / Dotted">Style: Solid</button>
+      <button class="text-btn fb-action-btn" id="fb-line-dir" title="Cycle One-way / Two-way / Plain">Arrow: →</button>
+      <button class="text-btn fb-action-btn" id="fb-line-label" title="Set connector label">🏷️ Label</button>
+    </div>
+    <span class="fb-sep"></span>
+    <button class="icon-btn" id="fb-front" title="Bring to front" aria-label="Bring to front"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 4H6a2 2 0 0 0-2 2v10"/></svg></button>
+    <button class="icon-btn" id="fb-duplicate" title="Duplicate (⌘D)" aria-label="Duplicate"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 0 1 2-2h10"/><path d="M14 11v6M11 14h6"/></svg></button>
+    <button class="icon-btn danger" id="fb-delete" title="Delete (Del)" aria-label="Delete"><svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M10 11v6M14 11v6"/><path d="M6 7l1 13h10l1-13"/><path d="M9 7V4h6v3"/></svg></button>
+  </div>
+
+  <!-- Slide-over Long-Form Document Drawer -->
+  <aside class="doc-drawer" id="doc-drawer" hidden aria-label="Document editor">
+    <header class="doc-drawer-head">
+      <div class="doc-drawer-tools">
+        <button class="icon-btn doc-cmd" data-cmd="formatBlock" data-val="H2" title="Heading"><b>H2</b></button>
+        <button class="icon-btn doc-cmd" data-cmd="formatBlock" data-val="H3" title="Subheading"><b>H3</b></button>
+        <button class="icon-btn doc-cmd" data-cmd="bold" title="Bold"><b>B</b></button>
+        <button class="icon-btn doc-cmd" data-cmd="italic" title="Italic"><i>I</i></button>
+        <button class="icon-btn doc-cmd" data-cmd="underline" title="Underline"><u>U</u></button>
+        <button class="icon-btn doc-cmd" data-cmd="insertUnorderedList" title="Bullet list"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M5 6h.01M5 12h.01M5 18h.01"/></svg></button>
+        <button class="icon-btn doc-cmd" data-cmd="formatBlock" data-val="BLOCKQUOTE" title="Quote"><svg viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5H4v6h3c0 4-4 6-4 6zm11 0c3 0 7-1 7-8V5h-6v6h3c0 4-4 6-4 6z"/></svg></button>
+      </div>
+      <div class="doc-drawer-meta">
+        <span id="doc-word-count">0 words</span>
+        <button class="icon-btn" id="doc-close" title="Close document (Esc)" aria-label="Close document"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+    </header>
+    <div class="doc-drawer-body">
+      <input type="text" class="doc-title-input" id="doc-title-input" placeholder="Untitled document">
+      <div class="doc-editor" id="doc-editor" contenteditable="true" data-placeholder="Write your creative brief, research notes, script, or project specification…"></div>
+    </div>
+  </aside>
+
+  <!-- Zoom & Status Controls -->
+  <div class="zoom-controls">
+    <span class="board-stats" id="board-stats" title="Items on this board">0 items</span>
+    <span class="top-sep"></span>
+    <button class="icon-btn" id="zoom-out" title="Zoom out (⌘−)" aria-label="Zoom out"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+    <button class="zoom-label" id="zoom-reset" title="Reset zoom (⌘0)">100%</button>
+    <button class="icon-btn" id="zoom-in" title="Zoom in (⌘+)" aria-label="Zoom in"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></button>
+    <button class="icon-btn" id="zoom-fit" title="Fit to screen (⇧1)" aria-label="Fit to screen"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="lightbox" id="lightbox" hidden><img alt="Preview"></div>
+
+  <!-- iCloud Drive & Per-Board Storage Center Dialog -->
+  <dialog class="modal-dialog storage-dialog" id="storage-dialog">
+    <header>
+      <div class="storage-title-row">
+        <svg class="brand-logo" viewBox="0 0 64 64" aria-hidden="true">
+          <rect width="64" height="64" rx="14" fill="#19062b"/>
+          <rect x="2.5" y="2.5" width="59" height="59" rx="11.5" fill="none" stroke="#c06eff" stroke-width="3.5"/>
+          <text x="32" y="43.5" text-anchor="middle" font-family="'Outfit','Inter',sans-serif" font-weight="800" font-size="31" letter-spacing="-1.2" fill="#f3e2ff">Mu</text>
+        </svg>
+        <div>
+          <h2>Museo iCloud Drive & Board Storage</h2>
+          <p class="modal-sub" id="storage-mode-sub">Every board is automatically saved to iCloud Drive and IndexedDB.</p>
+        </div>
+      </div>
+      <button class="icon-btn" id="storage-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div class="storage-path-box">
+      <div class="storage-path-label">Active Storage Folder</div>
+      <code id="storage-path-code">~/Library/Mobile Documents/com~apple~CloudDocs/Museo</code>
+      <div class="storage-path-actions">
+        <button class="text-btn accent-btn" id="btn-reveal-finder">📂 Reveal in Finder</button>
+        <button class="text-btn primary-btn" id="btn-force-backup">☁️ Sync & Snapshot Now</button>
+      </div>
+    </div>
+    <div class="storage-boards-section">
+      <h3>Saved Boards (<span id="storage-board-count">0</span>)</h3>
+      <div class="storage-boards-list" id="storage-boards-list"></div>
+    </div>
+  </dialog>
+
+  <!-- Freehand Sketch Pad Dialog -->
+  <dialog class="modal-dialog sketch-dialog" id="sketch-dialog">
+    <header>
+      <h2>Sketch Pad</h2>
+      <div class="sketch-toolbar">
+        <div class="sketch-colors" id="sketch-colors"></div>
+        <label class="sketch-size-label">Size <input type="range" id="sketch-size" min="2" max="24" value="4"></label>
+        <button class="text-btn" id="sketch-eraser">Eraser</button>
+        <button class="text-btn" id="sketch-clear">Clear</button>
+      </div>
+      <div class="sketch-actions">
+        <button class="text-btn" id="sketch-cancel">Cancel</button>
+        <button class="text-btn primary-btn" id="sketch-save">Save Sketch</button>
+      </div>
+    </header>
+    <div class="sketch-canvas-wrap">
+      <canvas id="sketch-canvas" width="680" height="440"></canvas>
+    </div>
+  </dialog>
+
+  <!-- Quick Search / Command Palette Dialog -->
+  <dialog class="modal-dialog search-dialog" id="search-dialog">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" id="search-input" placeholder="Search boards, notes, documents, tasks, swatches, links…" autocomplete="off">
+      <kbd>Esc</kbd>
+    </div>
+    <div class="search-results" id="search-results"></div>
+  </dialog>
+
+  <!-- Templates Picker Dialog -->
+  <dialog class="modal-dialog templates-dialog" id="templates-dialog">
+    <header>
+      <div>
+        <h2>Board Templates</h2>
+        <p class="modal-sub">Create a new sub-board or populate the current board with a structured creative workflow.</p>
+      </div>
+      <button class="icon-btn" id="templates-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </header>
+    <div class="templates-grid" id="templates-grid">
+      <button class="tpl-card" data-tpl="moodboard">
+        <div class="tpl-preview tpl-mood"><span>🎨</span></div>
+        <h3>Moodboard & Palette</h3>
+        <p>Curated visual references, extracted HEX color swatches, typography notes & directional arrows.</p>
+      </button>
+      <button class="tpl-card" data-tpl="brief">
+        <div class="tpl-preview tpl-brief"><span>📄</span></div>
+        <h3>Creative Brief</h3>
+        <p>Long-form project specification document, target audience notes, deliverables checklist & links.</p>
+      </button>
+      <button class="tpl-card" data-tpl="kanban">
+        <div class="tpl-preview tpl-kanban"><span>📋</span></div>
+        <h3>Kanban Project Plan</h3>
+        <p>Backlog, In Progress, Review, and Done columns with milestone checklists and budget table.</p>
+      </button>
+      <button class="tpl-card" data-tpl="storyboard">
+        <div class="tpl-preview tpl-story"><span>🎬</span></div>
+        <h3>Storyboard & Shot List</h3>
+        <p>Connected sequence frames, script document, camera shot table, and director commentary.</p>
+      </button>
+      <button class="tpl-card" data-tpl="brand">
+        <div class="tpl-preview tpl-brand"><span>✦</span></div>
+        <h3>Brand Identity System</h3>
+        <p>Primary & secondary brand swatches, voice & tone matrix table, and visual guidelines.</p>
+      </button>
+      <button class="tpl-card" data-tpl="mindmap">
+        <div class="tpl-preview tpl-mind"><span>🧠</span></div>
+        <h3>Brainstorm & Mindmap</h3>
+        <p>Central thesis hub connected via labeled arrows to research clusters, questions, and action items.</p>
+      </button>
+    </div>
+    <footer class="templates-foot">
+      <label class="tpl-mode-toggle">
+        <input type="checkbox" id="tpl-new-board" checked>
+        <span>Create as a new nested sub-board on the current board (uncheck to add directly to current canvas)</span>
+      </label>
+    </footer>
+  </dialog>
+
+  <dialog class="help-dialog" id="help-dialog">
+    <header><h2>Museo Keyboard Shortcuts</h2><button class="icon-btn" id="help-close" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></header>
+    <div class="help-grid">
+      <div><kbd>N</kbd> Note</div><div><kbd>H</kbd> Title / Heading</div>
+      <div><kbd>T</kbd> To-do list</div><div><kbd>L</kbd> Link</div>
+      <div><kbd>I</kbd> Image / Picture</div><div><kbd>S</kbd> Color Swatch</div>
+      <div><kbd>D</kbd> Document</div><div><kbd>M</kbd> Table</div>
+      <div><kbd>K</kbd> Sketch Pad</div><div><kbd>O</kbd> Comment</div>
+      <div><kbd>B</kbd> Board</div><div><kbd>C</kbd> Column</div>
+      <div><kbd>A</kbd> Arrow</div><div><kbd>⌘K</kbd> Quick Search</div>
+      <div><kbd>⌘[</kbd> Smaller Text/Title</div><div><kbd>⌘]</kbd> Larger Text/Title</div>
+      <div><kbd>Space</kbd> + drag Pan</div><div><kbd>⌘</kbd> + scroll Zoom</div>
+      <div><kbd>⌘Z</kbd> Undo</div><div><kbd>⇧⌘Z</kbd> Redo</div>
+      <div><kbd>⌘D</kbd> Duplicate</div><div><kbd>Del</kbd> Delete</div>
+      <div><kbd>⇧1</kbd> Fit to screen</div><div><kbd>Esc</kbd> Deselect</div>
+    </div>
+    <p class="help-foot">Drag the <b>right edge</b>, <b>bottom edge</b>, or <b>bottom-right corner</b> of any picture, title, board, or card to resize it freely. Double-click any resize handle to reset height. Every board syncs automatically to your Mac’s <b>iCloud Drive/Museo</b> folder.</p>
+  </dialog>
+
+  <input type="file" id="image-input" accept="image/*" multiple hidden>
+  <input type="file" id="import-input" accept="application/json,.json" hidden>
+
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/features.js"></script>
+  <script src="js/interactions.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

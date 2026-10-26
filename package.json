@@ -1,0 +1,11 @@
+{
+  "name": "museo",
+  "version": "2.0.0",
+  "description": "Museo — Visual workspace for creative projects with universal element sizing, iCloud Drive per-board persistence, and native macOS app bundle",
+  "private": true,
+  "scripts": {
+    "start": "python3 server.py 4173",
+    "dev": "python3 server.py 4173",
+    "build:mac": "zsh macos/build_app.sh"
+  }
+}

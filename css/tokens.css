@@ -1,0 +1,90 @@
+/* ==========================================================================
+   tokens.css — Design tokens, themes, colour palette & base resets
+   ========================================================================== */
+
+:root {
+  --font: 'Inter', system-ui, -apple-system, Segoe UI, sans-serif;
+  --font-display: 'Outfit', var(--font);
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --accent: hsl(256 92% 67%);
+  --accent-2: hsl(196 92% 58%);
+  --accent-soft: hsl(256 92% 67% / .16);
+  --danger: hsl(355 85% 62%);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --topbar-h: 58px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.2, 1.4, .4, 1);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: hsl(240 12% 6.5%);
+  --bg-glow: hsl(256 60% 30% / .18);
+  --grid: hsl(240 10% 70% / .12);
+  --panel: hsl(240 10% 12% / .76);
+  --panel-solid: hsl(240 10% 11%);
+  --panel-border: hsl(240 10% 100% / .08);
+  --hover: hsl(240 10% 100% / .06);
+  --text: hsl(240 12% 94%);
+  --muted: hsl(240 6% 60%);
+  --card: hsl(240 9% 14%);
+  --card-border: hsl(240 10% 100% / .07);
+  --column: hsl(240 10% 10.5%);
+  --line: hsl(240 8% 62%);
+  --shadow: 0 1px 2px rgb(0 0 0 / .45), 0 6px 18px rgb(0 0 0 / .32);
+  --shadow-hover: 0 2px 4px rgb(0 0 0 / .45), 0 12px 32px rgb(0 0 0 / .42);
+  --shadow-lift: 0 18px 50px rgb(0 0 0 / .55), 0 4px 10px rgb(0 0 0 / .4);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: hsl(36 25% 94.5%);
+  --bg-glow: hsl(256 90% 75% / .14);
+  --grid: hsl(30 10% 30% / .14);
+  --panel: hsl(0 0% 100% / .82);
+  --panel-solid: hsl(0 0% 100%);
+  --panel-border: hsl(30 10% 20% / .1);
+  --hover: hsl(30 10% 20% / .06);
+  --text: hsl(240 12% 14%);
+  --muted: hsl(240 5% 46%);
+  --card: hsl(0 0% 100%);
+  --card-border: hsl(30 10% 20% / .09);
+  --column: hsl(36 18% 89.5%);
+  --line: hsl(240 6% 52%);
+  --shadow: 0 1px 2px rgb(40 30 20 / .08), 0 6px 18px rgb(40 30 20 / .08);
+  --shadow-hover: 0 2px 4px rgb(40 30 20 / .1), 0 14px 32px rgb(40 30 20 / .14);
+  --shadow-lift: 0 20px 50px rgb(40 30 20 / .22), 0 4px 10px rgb(40 30 20 / .1);
+}
+
+/* Card colour palette */
+.c-none   { --tint: var(--accent); }
+.c-rose   { --tint: hsl(350 86% 64%); }
+.c-amber  { --tint: hsl(38 95% 58%); }
+.c-lime   { --tint: hsl(92 60% 52%); }
+.c-teal   { --tint: hsl(170 65% 46%); }
+.c-sky    { --tint: hsl(204 90% 60%); }
+.c-violet { --tint: hsl(262 85% 68%); }
+.c-slate  { --tint: hsl(220 12% 55%); }
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+}
+button { font: inherit; color: inherit; }
+svg {
+  width: 20px; height: 20px; fill: none; stroke: currentColor;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+[hidden] { display: none !important; }
+body.is-dragging, body.is-dragging * { cursor: grabbing !important; }
